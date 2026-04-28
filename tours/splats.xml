@@ -5,12 +5,27 @@
   <include url="%VIEWER%/plugins/cursor3d.xml" />
   <include url="%VIEWER%/plugins/wakelock.xml" />
 
+  <plugin
+    name="webvr"
+    webxr="auto"
+    mobilevr_support="true"
+    mobilevr_fake_support="false"
+    webvr_foveationlevel="0"
+    webvr_highrefreshrate="false"
+  />
+
   <view hlookat="0" vlookat="0" fovtype="MFOV" fov="100" maxpixelzoom="2.0" />
   <display bgcolor="0x000000" mipmapping="2"/>
 
   <!-- 3DGS: 既存PLYをここに指定 -->
   <image>
-    <splats url="../models/scene.ply" />
+    <splats
+      url="../models/scene.ply"
+      scale="1.0"
+      rx="0.0" ry="0.0" rz="0.0" rotationorder="YXZ"
+      tx="0.0" ty="0.0" tz="0.0"
+      antialias="0.0"
+    />
   </image>
 
   <!-- Desktop/mobile + VR controller friendly navigation -->
@@ -34,7 +49,7 @@
   />
 
   <events
-    onxmlcomplete="delayedcall(0.2, webvr.addbutton(); wakelock.enable(); trace('Splat viewer ready.'););"
+    onxmlcomplete="wakelock.enable(); trace('Splat viewer ready.');"
   />
 
   <layer name="help"

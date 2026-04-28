@@ -27,7 +27,8 @@
     <div class="overlay">
       <strong>krpano 3D Gaussian Splatting Viewer</strong><br />
       - <code>models/scene.ply</code> を既存PLYへ差し替え<br />
-      - PICO G3 / Meta Quest: ヘッドセットブラウザでこのページを開き、VRボタンで入場
+      - PICO G3 / Meta Quest: HTTPSで配信したURLを開き、VRボタンで入場
+      <div id="secureWarn" style="display:none;color:#ffb4b4;margin-top:6px;">⚠️ WebXRはHTTPS(またはlocalhost)が必須です。HTTP配信だとVRボタンが出ません。</div>
     </div>
 
     <div id="pano"></div>
@@ -42,6 +43,10 @@
     -->
     <script src="./krpano/krpano.js"></script>
     <script>
+      if (!window.isSecureContext && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+        document.getElementById("secureWarn").style.display = "block";
+      }
+
       embedpano({
         swf: "./krpano/krpano.swf",
         xml: "./tours/splats.xml",
@@ -49,6 +54,10 @@
         html5: "only+webgl",
         mobilescale: 1.0,
         passQueryParameters: true,
+        onready: function(krpano) {
+          // webvr.xml loaded後にVRボタンを明示追加（環境対応時のみ表示）
+          krpano.call("if(plugin[webvr], webvr.addbutton(); );");
+        },
         webglsettings: {
           preserveDrawingBuffer: false
         }
