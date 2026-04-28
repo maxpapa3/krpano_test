@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>krpano Gaussian Splat Viewer (VR対応)</title>
+    <style>
+      html, body, #pano { width: 100%; height: 100%; margin: 0; background: #000; font-family: system-ui, -apple-system, sans-serif; }
+      .overlay {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 20;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 12px;
+        line-height: 1.5;
+        max-width: min(92vw, 440px);
+      }
+      .overlay code { color: #9fe5ff; }
+    </style>
+  </head>
+  <body>
+    <div class="overlay">
+      <strong>krpano 3D Gaussian Splatting Viewer</strong><br />
+      - <code>models/scene.ply</code> を既存PLYへ差し替え<br />
+      - PICO G3 / Meta Quest: ヘッドセットブラウザでこのページを開き、VRボタンで入場
+    </div>
+
+    <div id="pano"></div>
+
+    <!--
+      krpano配布物を ./krpano/ に配置してください:
+      - krpano.js
+      - plugins/webvr.xml
+      - plugins/controls3d.xml
+      - plugins/cursor3d.xml
+      - plugins/wakelock.xml
+    -->
+    <script src="./krpano/krpano.js"></script>
+    <script>
+      embedpano({
+        swf: "./krpano/krpano.swf",
+        xml: "./tours/splats.xml",
+        target: "pano",
+        html5: "only+webgl",
+        mobilescale: 1.0,
+        passQueryParameters: true,
+        webglsettings: {
+          preserveDrawingBuffer: false
+        }
+      });
+    </script>
+  </body>
+</html>
