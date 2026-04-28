@@ -1,0 +1,68 @@
+<krpano>
+  <!-- VR / WebXR support -->
+  <include url="%VIEWER%/plugins/webvr.xml" />
+  <include url="%VIEWER%/plugins/controls3d.xml" />
+  <include url="%VIEWER%/plugins/cursor3d.xml" />
+  <include url="%VIEWER%/plugins/wakelock.xml" />
+
+  <plugin
+    name="webvr"
+    webxr="auto"
+    mobilevr_support="true"
+    mobilevr_fake_support="false"
+    webvr_foveationlevel="0"
+    webvr_highrefreshrate="false"
+  />
+
+  <view hlookat="0" vlookat="0" fovtype="MFOV" fov="100" maxpixelzoom="2.0" />
+  <display bgcolor="0x000000" mipmapping="2"/>
+
+  <!-- 3DGS: 既存PLYをここに指定 -->
+  <image>
+    <splats
+      url="../models/scene.ply"
+      scale="1.0"
+      rx="0.0" ry="0.0" rz="0.0" rotationorder="YXZ"
+      tx="0.0" ty="0.0" tz="0.0"
+      antialias="0.0"
+    />
+  </image>
+
+  <!-- Desktop/mobile + VR controller friendly navigation -->
+  <controls
+    movemode="walking"
+    wheelmode="dolly zoom"
+    speed="0.7"
+    collision="false"
+    groundcollision="false"
+    joypad="true"
+    usevrfloorlevel="true"
+    eyelevel="160"
+  />
+
+  <cursor3d
+    enabled="true"
+    vrsupport="true"
+    alpha="0.65"
+    size="24"
+    ondoubleclick="cursor3d_movetohit();"
+  />
+
+  <events
+    onxmlcomplete="wakelock.enable(); trace('Splat viewer ready.');"
+  />
+
+  <layer name="help"
+    type="text"
+    align="lefttop"
+    x="12"
+    y="68"
+    width="560"
+    autoheight="true"
+    bgalpha="0.35"
+    bgcolor="0x000000"
+    css="font-size:14px; line-height:1.45; color:#ffffff; padding:10px;"
+    html="[b]操作:[/b] ドラッグで視点移動 / WASD移動 / ダブルクリックで移動。VRではコントローラースティックで移動。"
+    devices="desktop.or.mobile" />
+
+</krpano>
